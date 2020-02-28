@@ -7,7 +7,7 @@ def deriv(y, t, N, beta, gamma):
     # The SIR model differential equations.
     S, I, R = y
     dSdt = -beta * S * I / N
-    dIdt = beta * S * I / N - gamma * I
+    dIdt = (beta * S * I / N) - (gamma * I)
     dRdt = gamma * I
     return dSdt, dIdt, dRdt
 
@@ -21,7 +21,7 @@ def main():
     S0 = N - I0 - R0
     # Contact rate, b
     # eta, and mean recovery rate, gamma, (in 1/days).
-    beta, gamma = 1, 1 / 20
+    beta, gamma = 0.2, 1 / 10
     # A grid of time points (in days)
     weeks = 26
     t = np.linspace(0, weeks * 7, weeks * 7 * 10)
