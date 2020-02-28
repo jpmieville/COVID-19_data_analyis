@@ -4,7 +4,8 @@ from scipy.integrate import odeint
 
 
 def deriv(y, t, N, beta, gamma, sigma):
-    # The SIR model differential equations.
+    # The SEIR model differential equations.
+    #
     S, E, I, R = y
     dSdt = -beta * S * I / N
     dEdt = (beta * S * I / N) - (sigma * E)
@@ -18,15 +19,15 @@ def main():
     N = 10000
     # Initial number of infected and recovered individuals, I0 and R0.
     E0 = 1
-    I0 = 1
+    I0 = 0
     R0 = 0
     # Everyone else, S0, is susceptible to infection initially.
     S0 = N - -E0 - I0 - R0
     # Contact rate, b
     # eta, and mean recovery rate, gamma, (in 1/days).
-    beta = 3
+    beta = 2
     gamma = 1 / 20
-    sigma = 1 / 5
+    sigma = 1 / 10
     # A grid of time points (in days)
     weeks = 26
     t = np.linspace(0, weeks * 7, weeks * 7 * 10)
@@ -38,15 +39,17 @@ def main():
     S, E, I, R = ret.T
 
     # Plot the data on three separate curves for S(t), I(t) and R(t)
-    fig = plt.figure(figsize=(6, 4))
-    ax = fig.add_subplot(111)  # , axis_bgcolor='#dddddd', axisbelow=True)
+    fig, ax = plt.subplots()
+    #
+    # ax = fig.add_subplot(111)  # , axis_bgcolor='#dddddd', axisbelow=True)
     ax.plot(t, S / N, 'b', alpha=0.5, lw=2, label='Susceptible')
     ax.plot(t, E / N, 'c', alpha=0.5, lw=2, label='Exposed')
     ax.plot(t, I / N, 'r', alpha=0.5, lw=2, label='Infected')
     ax.plot(t, R / N, 'g', alpha=0.5, lw=2, label='Recovered with immunity')
-    ax.set_xlabel('Time / days')
-    ax.set_ylabel('Number (1000s)')
-    ax.set_ylim(0, 1.2)
+    ax.set_title("$\\beta = {beta}$\n$\\gamma = {gamma}$".format(beta=beta, gamma=gamma))
+    ax.set_xlabel('Time in days')
+    ax.set_ylabel('Relative population')
+    ax.set_ylim(0, 1.05)
     # ax.yaxis.set_tick_params(length=2)
     # ax.xaxis.set_tick_params(length=2)
     # ax.grid(b=True, which='major', c='w', lw=2, ls='-')

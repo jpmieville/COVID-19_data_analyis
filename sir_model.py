@@ -3,7 +3,7 @@ import numpy as np
 from scipy.integrate import odeint
 
 
-def deriv(y, t, N, beta, gamma):
+def sir_model(y, t, N, beta, gamma):
     # The SIR model differential equations.
     S, I, R = y
     dSdt = -beta * S * I / N
@@ -29,7 +29,7 @@ def main():
     # Initial conditions vector
     y0 = S0, I0, R0
     # Integrate the SIR equations over the time grid, t.
-    ret = odeint(deriv, y0, t, args=(N, beta, gamma))
+    ret = odeint(sir_model, y0, t, args=(N, beta, gamma))
     S, I, R = ret.T
 
     # Plot the data on three separate curves for S(t), I(t) and R(t)
