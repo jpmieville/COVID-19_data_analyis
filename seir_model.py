@@ -25,8 +25,8 @@ def main():
     S0 = N - -E0 - I0 - R0
     # Contact rate, b
     # eta, and mean recovery rate, gamma, (in 1/days).
-    beta = 2
-    gamma = 1 / 20
+    beta = 1.25
+    gamma = 1 / 5
     sigma = 1 / 10
     # A grid of time points (in days)
     weeks = 26
@@ -46,7 +46,8 @@ def main():
     ax.plot(t, E / N, 'c', alpha=0.5, lw=2, label='Exposed')
     ax.plot(t, I / N, 'r', alpha=0.5, lw=2, label='Infected')
     ax.plot(t, R / N, 'g', alpha=0.5, lw=2, label='Recovered with immunity')
-    ax.set_title("$\\beta = {beta}$\n$\\gamma = {gamma}$".format(beta=beta, gamma=gamma))
+    # ax.plot(t, (S + E + I + R) / N, 'y', alpha=0.5, lw=2, label='Total')
+    ax.set_title("$\\beta = {beta}$\n$\\gamma = {gamma} \\sigma ={sigma}$".format(beta=beta, gamma=gamma, sigma=sigma))
     ax.set_xlabel('Time in days')
     ax.set_ylabel('Relative population')
     ax.set_ylim(0, 1.05)
@@ -54,9 +55,11 @@ def main():
     # ax.xaxis.set_tick_params(length=2)
     # ax.grid(b=True, which='major', c='w', lw=2, ls='-')
     legend = ax.legend()
-    # legend.get_frame().set_alpha(0.5)
+    legend.get_frame().set_alpha(0.5)
     # for spine in ('top', 'right', 'bottom', 'left'):
     #     ax.spines[spine].set_visible(False)
+    print(f"{int(t[np.argmax(E)])} max Susceptible")
+    print(f"{int(t[np.argmax(I)])} max Infected")
     plt.show()
 
 
