@@ -25,9 +25,10 @@ def main():
     S0 = N - -E0 - I0 - R0
     # Contact rate, b
     # eta, and mean recovery rate, gamma, (in 1/days).
-    beta = 1.25
+    beta = 5
     gamma = 1 / 5
     sigma = 1 / 10
+    print(beta * sigma / gamma)
     # A grid of time points (in days)
     weeks = 26
     t = np.linspace(0, weeks * 7, weeks * 7 * 10)
@@ -42,9 +43,11 @@ def main():
     fig, ax = plt.subplots()
     #
     # ax = fig.add_subplot(111)  # , axis_bgcolor='#dddddd', axisbelow=True)
+    # infected =
     ax.plot(t, S / N, 'b', alpha=0.5, lw=2, label='Susceptible')
     ax.plot(t, E / N, 'c', alpha=0.5, lw=2, label='Exposed')
     ax.plot(t, I / N, 'r', alpha=0.5, lw=2, label='Infected')
+    # ax.plot(t, I.cumsum() / N, 'r', alpha=0.5, lw=2, label='Infected cumulated')
     ax.plot(t, R / N, 'g', alpha=0.5, lw=2, label='Recovered with immunity')
     # ax.plot(t, (S + E + I + R) / N, 'y', alpha=0.5, lw=2, label='Total')
     ax.set_title("$\\beta = {beta}$\n$\\gamma = {gamma} \\sigma ={sigma}$".format(beta=beta, gamma=gamma, sigma=sigma))
