@@ -25,12 +25,12 @@ def main():
     S0 = N - -E0 - I0 - R0
     # Contact rate, b
     # eta, and mean recovery rate, gamma, (in 1/days).
-    beta = 5
-    gamma = 1 / 5
-    sigma = 1 / 10
-    print(beta * sigma / gamma)
+    beta = 0.4
+    gamma = 1 / 10
+    sigma = 1 / 5
+    print(beta / gamma)
     # A grid of time points (in days)
-    weeks = 26
+    weeks = 52
     t = np.linspace(0, weeks * 7, weeks * 7 * 10)
 
     # Initial conditions vector
@@ -50,7 +50,7 @@ def main():
     # ax.plot(t, I.cumsum() / N, 'r', alpha=0.5, lw=2, label='Infected cumulated')
     ax.plot(t, R / N, 'g', alpha=0.5, lw=2, label='Recovered with immunity')
     # ax.plot(t, (S + E + I + R) / N, 'y', alpha=0.5, lw=2, label='Total')
-    ax.set_title("$\\beta = {beta}$\n$\\gamma = {gamma} \\sigma ={sigma}$".format(beta=beta, gamma=gamma, sigma=sigma))
+    ax.set_title("$\\beta = {beta}$ / $\\gamma = {gamma}$ / $\\sigma = {sigma}$".format(beta=beta, gamma=gamma, sigma=sigma))
     ax.set_xlabel('Time in days')
     ax.set_ylabel('Relative population')
     ax.set_ylim(0, 1.05)
