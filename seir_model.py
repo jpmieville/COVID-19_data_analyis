@@ -25,7 +25,7 @@ def main():
     S0 = N - -E0 - I0 - R0
     # Contact rate, b
     # eta, and mean recovery rate, gamma, (in 1/days).
-    beta = 0.4
+    beta = 3
     gamma = 1 / 10
     sigma = 1 / 5
     print(beta / gamma)
