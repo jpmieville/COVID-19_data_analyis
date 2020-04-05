@@ -1,2 +1,5 @@
 /.idea
 *.ipynb
+*.xlsx
+*.xlsdd:
+*.csv
