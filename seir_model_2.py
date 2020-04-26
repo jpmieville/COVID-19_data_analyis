@@ -3,12 +3,21 @@ import numpy as np
 from scipy.integrate import odeint, cumtrapz
 
 
-def deriv(y, t, N, beta, gamma, sigma):
+def beta_function(t, start, beta):
+    if t <= start:
+        return beta
+    elif t <= 63 + 10:
+        return beta * np.exp(-0.05*(t - start))
+    else:
+        return beta
+
+
+def deriv(y, t, N, beta, gamma, sigma, start):
     # The SEIR model differential equations.
     #
     S, E, I, R = y
-    dSdt = -beta * S * (I + E) / N
-    dEdt = (beta * S * (I + E) / N) - (sigma * E)
+    dSdt = -beta_function(t, start, beta) * S * (I + E) / N
+    dEdt = (beta_function(t, start, beta) * S * (I + E) / N) - (sigma * E)
     dIdt = (sigma * E) - (gamma * I)
     dRdt = gamma * I
     return dSdt, dEdt, dIdt, dRdt
@@ -24,18 +33,19 @@ def main():
     # Everyone else, S0, is susceptible to infection initially.
     S0 = N - -E0 - I0 - R0
     # Contact rate, beta, and mean recovery rate, gamma, (in 1/days).
-    beta = 0.2
-    gamma = 1 / 10
+    beta = 0.3
+    gamma = 1 / 20
     sigma = 1 / 10
     print(beta / gamma)
+    start = 20
     # A grid of time points (in days)
-    weeks = 26
+    weeks = 52
     t = np.linspace(0, weeks * 7, weeks * 7 * 10)
 
     # Initial conditions vector
     y0 = S0, E0, I0, R0
     # Integrate the SIR equations over the time grid, t.
-    ret = odeint(deriv, y0, t, args=(N, beta, gamma, sigma))
+    ret = odeint(deriv, y0, t, args=(N, beta, gamma, sigma, start))
     S, E, I, R = ret.T
 
     # Plot the data on three separate curves for S(t), I(t) and R(t)
@@ -64,9 +74,12 @@ def main():
     print(f"{int(t[np.argmax(I)])} max Infected")
     # plt.show()
     I_cum = cumtrapz(I, t)
+
     print(max(I_cum))
     ax2.plot(t[:-1], I_cum / max(I_cum))
     ax2.plot(t, I / N, 'r')
+    ax2.plot(t, np.array([beta_function(i, start, beta) for i in t]))
+    ax2.plot(t, R / N, 'g')
     ax2.set_yscale('log')
     # ax2.set_xscale('log')
     plt.show()
