@@ -8,3 +8,5 @@ The notebook covid19_USA.ipynb allows you to analyze data for the different stat
 
 The notebook covid19_swiss.ipynb allows the analysis of Swiss data collected by 
 https://github.com/openZH/covid_19
+
+
