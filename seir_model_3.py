@@ -6,8 +6,11 @@ from scipy.integrate import odeint, cumtrapz
 def beta_function(t, start, beta):
     if t <= start:
         return beta
-    elif t > start:
-        return ((beta - 0.01)  * np.exp(-0.05*(t - start))) + (0.01)
+    elif start < t < start + 150:
+        return ((beta - 0.01) * np.exp(-0.05 * (t - start))) + (0.01)
+    else:
+        return beta / 2
+
 
 def deriv(y, t, N, beta, gamma, sigma, start):
     # The SEIR model differential equations.
@@ -56,7 +59,8 @@ def main():
     # ax.plot(t, I.cumsum() / N, 'r', alpha=0.5, lw=2, label='Infected cumulated')
     ax1.plot(t, R / N, 'g', alpha=0.5, lw=2, label='Recovered with immunity')
     # ax.plot(t, (S + E + I + R) / N, 'y', alpha=0.5, lw=2, label='Total')
-    ax1.set_title("$\\beta = {beta}$ / $\\gamma = {gamma}$ / $\\sigma = {sigma}$".format(beta=beta, gamma=gamma, sigma=sigma))
+    ax1.set_title(
+        "$\\beta = {beta}$ / $\\gamma = {gamma}$ / $\\sigma = {sigma}$".format(beta=beta, gamma=gamma, sigma=sigma))
     ax1.set_xlabel('Time in days')
     ax1.set_ylabel('Relative population')
     ax1.set_ylim(0, 1.05)
