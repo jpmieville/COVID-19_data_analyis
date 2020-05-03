@@ -13,6 +13,10 @@ For the SEIR analysis, ...
 
 https://gabgoh.github.io/COVID/index.html
 
+## Italy
+
+![italy](italy_figure.png)
+
 ## Switzerland
 
 ![swiss](swiss_figure.png)
