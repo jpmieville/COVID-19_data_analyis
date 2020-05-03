@@ -12,3 +12,7 @@ https://github.com/openZH/covid_19
 For the SEIR analysis, ...
 
 https://gabgoh.github.io/COVID/index.html
+
+## Switzerland
+
+![swiss](swiss_figure.png)
