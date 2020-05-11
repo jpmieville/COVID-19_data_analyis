@@ -34,7 +34,7 @@ def main():
     gamma = 1 / 20
     sigma = 1 / 10
     print(beta / gamma)
-    start = 20
+    start = 25
     # A grid of time points (in days)
     weeks = 52
     t = np.linspace(0, weeks * 7, weeks * 7 * 10)
@@ -46,15 +46,15 @@ def main():
     S, E, I, R = ret.T
 
     # Plot the data on three separate curves for S(t), I(t) and R(t)
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 8))
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(5, 7))
     #
     # ax = fig.add_subplot(111)  # , axis_bgcolor='#dddddd', axisbelow=True)
     # infected =
-    ax1.plot(t, S / N, 'b', alpha=0.5, lw=2, label='Susceptible')
-    ax1.plot(t, E / N, 'c', alpha=0.5, lw=2, label='Exposed')
-    ax1.plot(t, I / N, 'r', alpha=0.5, lw=2, label='Infected')
+    ax1.plot(t, S / N, 'b', label='Susceptible')
+    ax1.plot(t, E / N, 'c', label='Exposed')
+    ax1.plot(t, I / N, 'r', label='Infected')
     # ax.plot(t, I.cumsum() / N, 'r', alpha=0.5, lw=2, label='Infected cumulated')
-    ax1.plot(t, R / N, 'g', alpha=0.5, lw=2, label='Recovered with immunity')
+    ax1.plot(t, R / N, 'g', label='Recovered with immunity')
     # ax.plot(t, (S + E + I + R) / N, 'y', alpha=0.5, lw=2, label='Total')
     ax1.set_title("$\\beta = {beta}$ / $\\gamma = {gamma}$ / $\\sigma = {sigma}$".format(beta=beta, gamma=gamma, sigma=sigma))
     ax1.set_xlabel('Time in days')
@@ -70,15 +70,16 @@ def main():
     print(f"{int(t[np.argmax(E)])} max Susceptible")
     print(f"{int(t[np.argmax(I)])} max Infected")
     # plt.show()
-    I_cum = cumtrapz(I, t)
-
-    print(max(I_cum))
-    ax2.plot(t[:-1], I_cum / max(I_cum))
+    # I_cum = cumtrapz(I, t)
+    # print(max(I_cum))
+    # ax2.plot(t[:-1], I_cum / max(I_cum), 'b')
     ax2.plot(t, I / N, 'r')
-    ax2.plot(t, np.array([beta_function(i, start, beta) for i in t]))
+    ax2.plot(t, np.array([beta_function(i, start, beta) for i in t]), "m")
     ax2.plot(t, R / N, 'g')
-    ax2.set_yscale('log')
+    # ax2.set_yscale('log')
     # ax2.set_xscale('log')
+    # ax3.plot(R / N, S / N, )
+    # ax3.set_yscale('log')
     plt.show()
 
 

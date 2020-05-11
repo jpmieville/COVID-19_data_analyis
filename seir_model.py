@@ -7,8 +7,8 @@ def deriv(y, t, N, beta, gamma, sigma):
     # The SEIR model differential equations.
     #
     S, E, I, R = y
-    dSdt = -beta * S * (I + E) / N
-    dEdt = (beta * S * (I + E) / N) - (sigma * E)
+    dSdt = -beta * S * (I) / N
+    dEdt = (beta * S * (I) / N) - (sigma * E)
     dIdt = (sigma * E) - (gamma * I)
     dRdt = gamma * I
     return dSdt, dEdt, dIdt, dRdt
@@ -24,12 +24,12 @@ def main():
     # Everyone else, S0, is susceptible to infection initially.
     S0 = N - -E0 - I0 - R0
     # Contact rate, beta, and mean recovery rate, gamma, (in 1/days).
-    beta = 0.2
+    beta = 0.12
     gamma = 1 / 10
-    sigma = 1 / 10
+    sigma = 1 / 5
     print(beta / gamma)
     # A grid of time points (in days)
-    weeks = 26
+    weeks = 104
     t = np.linspace(0, weeks * 7, weeks * 7 * 10)
 
     # Initial conditions vector
@@ -39,15 +39,17 @@ def main():
     S, E, I, R = ret.T
 
     # Plot the data on three separate curves for S(t), I(t) and R(t)
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 8))
+    # fig = plt.figure(figsize=(8, 8))
+    fig = plt.figure()
     #
     # ax = fig.add_subplot(111)  # , axis_bgcolor='#dddddd', axisbelow=True)
     # infected =
-    ax1.plot(t, S / N, 'b', alpha=0.5, lw=2, label='Susceptible')
-    ax1.plot(t, E / N, 'c', alpha=0.5, lw=2, label='Exposed')
-    ax1.plot(t, I / N, 'r', alpha=0.5, lw=2, label='Infected')
+    ax1 = fig.add_subplot(1, 1, 1)
+    ax1.plot(t, S / N, 'b', label='Susceptible')
+    ax1.plot(t, E / N, 'c', label='Exposed')
+    ax1.plot(t, I / N, 'r', label='Infected')
     # ax.plot(t, I.cumsum() / N, 'r', alpha=0.5, lw=2, label='Infected cumulated')
-    ax1.plot(t, R / N, 'g', alpha=0.5, lw=2, label='Recovered with immunity')
+    ax1.plot(t, R / N, 'g', label='Recovered with immunity')
     # ax.plot(t, (S + E + I + R) / N, 'y', alpha=0.5, lw=2, label='Total')
     ax1.set_title("$\\beta = {beta}$ / $\\gamma = {gamma}$ / $\\sigma = {sigma}$".format(beta=beta, gamma=gamma, sigma=sigma))
     ax1.set_xlabel('Time in days')
@@ -63,11 +65,12 @@ def main():
     print(f"{int(t[np.argmax(E)])} max Susceptible")
     print(f"{int(t[np.argmax(I)])} max Infected")
     # plt.show()
-    I_cum = cumtrapz(I, t)
-    print(max(I_cum))
-    ax2.plot(t[:-1], I_cum / max(I_cum))
-    ax2.plot(t, I / N, 'r')
-    ax2.set_yscale('log')
+    # I_cum = cumtrapz(I, t)
+    # print(max(I_cum))
+    # ax2 = fig.add_subplot(2, 1, 2)
+    # ax2.plot(t[:-1], I_cum / max(I_cum))
+    # ax2.plot(t, I / N, 'r')
+    # ax2.set_yscale('log')
     # ax2.set_xscale('log')
     plt.show()
 
