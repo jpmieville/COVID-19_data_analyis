@@ -16,20 +16,21 @@ def deriv(y, t, N, beta, gamma, sigma):
 
 def main():
     # Total population, N.
+    p = 0.0
     N = 10000
     # Initial number of infected and recovered individuals, I0 and R0.
     E0 = 1
     I0 = 0
-    R0 = 0
+    R0 = 10000 * p
     # Everyone else, S0, is susceptible to infection initially.
-    S0 = N - -E0 - I0 - R0
+    S0 = N - E0 - I0 - R0
     # Contact rate, beta, and mean recovery rate, gamma, (in 1/days).
-    beta = 0.12
-    gamma = 1 / 10
-    sigma = 1 / 5
+    beta = 0.3
+    gamma = 1 / 15
+    sigma = 1 / 7
     print(beta / gamma)
     # A grid of time points (in days)
-    weeks = 104
+    weeks = 52
     t = np.linspace(0, weeks * 7, weeks * 7 * 10)
 
     # Initial conditions vector

@@ -6,10 +6,10 @@ from scipy.integrate import odeint, cumtrapz
 def beta_function(t, start, beta):
     if t <= start:
         return beta
-    elif start < t < start + 150:
+    elif start < t < start + 50:
         return ((beta - 0.01) * np.exp(-0.05 * (t - start))) + (0.01)
     else:
-        return beta / 2
+        return beta
 
 
 def deriv(y, t, N, beta, gamma, sigma, start):
@@ -31,13 +31,13 @@ def main():
     I0 = 0
     R0 = 0
     # Everyone else, S0, is susceptible to infection initially.
-    S0 = N - -E0 - I0 - R0
+    S0 = N - E0 - I0 - R0
     # Contact rate, beta, and mean recovery rate, gamma, (in 1/days).
     beta = 0.2
     gamma = 1 / 20
     sigma = 1 / 10
     print(beta / gamma)
-    start = 20
+    start = 30
     # A grid of time points (in days)
     weeks = 52
     t = np.linspace(0, weeks * 7, weeks * 7 * 10)
@@ -74,10 +74,7 @@ def main():
     print(f"{int(t[np.argmax(E)])} max Susceptible")
     print(f"{int(t[np.argmax(I)])} max Infected")
     # plt.show()
-    I_cum = cumtrapz(I, t)
 
-    print(max(I_cum))
-    ax2.plot(t[:-1], I_cum / max(I_cum))
     ax2.plot(t, I / N, 'r')
     ax2.plot(t, np.array([beta_function(i, start, beta) for i in t]))
     ax2.plot(t, R / N, 'g')

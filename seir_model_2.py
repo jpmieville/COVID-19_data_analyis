@@ -28,7 +28,7 @@ def main():
     I0 = 0
     R0 = 0
     # Everyone else, S0, is susceptible to infection initially.
-    S0 = N - -E0 - I0 - R0
+    S0 = N - E0 - I0 - R0
     # Contact rate, beta, and mean recovery rate, gamma, (in 1/days).
     beta = 0.2
     gamma = 1 / 20
